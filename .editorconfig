@@ -1,0 +1,11 @@
+; Top-most Editorconfig File
+root = true
+
+; Unix-style Newlines
+[*]
+end_of_line = LF
+
+; Indentation
+[*]
+indent_style = space
+indent_size = 2
