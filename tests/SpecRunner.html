@@ -36,7 +36,7 @@
       }
     });
 
-    requirejs(["jasmine/jasmine-html"], function () {
+    requirejs(["test/collectionsGroup"], function () {
       var jasmineEnv = jasmine.getEnv();
       jasmineEnv.updateInterval = 1000;
 
@@ -55,5 +55,35 @@
 </head>
 <body>
 
+  <script id="lecture-template" type="text/template">
+    <div class="lecture-info-date">
+      <span class="lecture-date">
+        <span class="icon-calendar"></span>
+        <%= date %>
+      </span>
+      <span class="lecture-time">
+        <span class="icon-time"></span>
+        <%= time %>
+      </span>
+    </div>
+    <div class="lecture-info-about">
+      <span class="lecture-title">
+        <%= title %>
+      </span>
+      <span class="lecture-lecturer">
+        <%= lecturer %>
+      </span>
+    </div>
+  </script>
+
+  <script id="schedule-template" type="text/template">
+    <div class="schedule-title">
+      <span class="icon-bookmark"></span>
+      <%= title %>
+    </div>
+    <div class="schedule-lectures">
+      <%= lectures %>
+    </div>
+  </script>
 </body>
 </html>
