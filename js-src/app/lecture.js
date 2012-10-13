@@ -3,16 +3,16 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
   var Model = Backbone.Model.extend({
     initialize: function () {
       this.on("change:timestamp", function () {
-        delete this.getDate.date;
+        delete this._date;
       });
     },
 
     getDate: function () {
-      if (this.getDate.date === undefined) {
-        this.getDate.date = new Date(this.get("timestamp"));
+      if (this._date === undefined) {
+        this._date = new Date(this.get("timestamp"));
       }
 
-      return this.getDate.date;
+      return this._date;
     },
 
     defaults: {
