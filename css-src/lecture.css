@@ -42,3 +42,18 @@
 .lecture-lecturer:before {
   content: "–";
 }
+
+.lecture-description {
+  display: block;
+  margin: 10px 0;
+}
+
+.lecture-actions {
+  display: block;
+  margin: 5px 0;
+}
+
+.lecture-actions > a {
+  display: inline-block;
+  padding: 0 5px;
+}
