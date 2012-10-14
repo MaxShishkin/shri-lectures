@@ -75,5 +75,52 @@
     </div>
   </script>
 
+  <!-- TODO: Use datetime input -->
+  <script id="lecture-template-edit" type="text/template">
+    <form>
+      <div class="control-group control-group-datetime">
+          <label class="control-label">Дата</label>
+          <div class="controls">
+            <input type="text" name="date" value="<%= date %>">
+          </div>
+          <label class="control-label">Время</label>
+          <div class="controls">
+            <input type="text" name="time" value="<%= time %>">
+          </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Название</label>
+        <div class="controls">
+          <input class="input-xlarge" type="text" name="title" placeholder="Внеземной разум" value="<%= title %>">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Лектор</label>
+        <div class="controls">
+          <input class="input-xlarge" type="text" name="lecturer" placeholder="Василий Дудко" value="<%= lecturer %>">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Описание</label>
+        <div class="controls">
+          <textarea name="description"
+            placeholder="Одни ли мы во вселенной? Василий задавался этим вопросом с детства..."
+            rows="5"
+          ><%= description %></textarea>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn lecture-edit-save">Сохранить</button>
+          <button type="button" class="btn lecture-edit-cancel">Отмена</button>
+        </div>
+      </div>
+    </form>
+  </script>
+
 </body>
 </html>

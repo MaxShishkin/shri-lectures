@@ -33,8 +33,8 @@ define(["jquery", "underscore", "backbone", "app/lecture"], function ($, _, Back
     },
 
     onModelRemoved: function (aLecture) {
+      this.views[aLecture.cid].$el.remove();
       delete this.views[aLecture.cid];
-      this.render();
     },
 
     template: _.template($("#schedule-template").html()),
