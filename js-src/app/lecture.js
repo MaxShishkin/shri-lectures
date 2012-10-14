@@ -95,12 +95,11 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
       },
       $datetimeGroup;
 
-      $frmContainer.find("input").each(function (i, el) {
+      $frmContainer.find("input, textarea").each(function (i, el) {
         var $el = $(el);
         form.input[$el.attr("name")] = $el.val();
       });
 
-      form.input.description = $frmContainer.find("[name=description]").val();
       form.processed.date = helpers.parseDateStr(form.input.date + " " + form.input.time);
       form.isValid = form.processed.date.isValid();
 
