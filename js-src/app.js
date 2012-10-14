@@ -1,7 +1,8 @@
-require(["jquery", "app/navigation", "app/scheduleController", "app/lecture"],
-function ($, nav, controller, lecture) {
+require(["jquery", "app/navigation", "app/scheduleController", "app/pages", "app/lecture"],
+function ($, nav, controller, pages, lecture) {
   nav.init("#view", $(".nav"));
   controller.init($("#view"));
+  pages.init(controller);
 
   var aLecture = new lecture.Model({
       timestamp: new Date().getTime(),
@@ -24,20 +25,7 @@ function ($, nav, controller, lecture) {
     description: "A lecture on being an awesome dude continues!"
   });
 
-  var dLecture = new lecture.Model({
-    timestamp: aLecture.get("timestamp") + 10000000000,
-    title: "Some old lection",
-    lecturer: "Old man",
-    description: "How to survive for years."
-  });
-
   controller.add(aLecture);
   controller.add(bLecture);
   controller.add(cLecture);
-  controller.add(dLecture);
-
-  aLecture.set("title", "New changed title");
-  controller.remove(bLecture);
-  cLecture.set("timestamp", dLecture.get("timestamp"));
-  aLecture.set("timestamp", dLecture.get("timestamp"));
 });
