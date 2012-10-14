@@ -83,18 +83,18 @@ function (lecture, CollectionStorage) {
       expect(localStorage.getItem("test-cs")).toEqual(null);
     });
 
-    it("should be able to restore its state from localStorage", function () {
+    it("should be able to restore from localStorage", function () {
       storage.add(aLecture);
       storage.add(bLecture);
 
       storage = new CollectionStorage("test-cs");
-      storage.restoreFromLocalStorage();
+      var ls = storage.restoreFromLocalStorage();
 
-      expect(storage.getStoredItems().length).toEqual(2);
+      expect(ls.length).toEqual(2);
 
-      expect(storage.getStoredItems()[0].title).toEqual(aLecture.get("title"));
-      expect(storage.getStoredItems()[0].timestamp).toEqual(aLecture.get("timestamp"));
-      expect(storage.getStoredItems()[1].description).toEqual(bLecture.get("description"));
+      expect(ls[0].title).toEqual(aLecture.get("title"));
+      expect(ls[0].timestamp).toEqual(aLecture.get("timestamp"));
+      expect(ls[1].description).toEqual(bLecture.get("description"));
     });
 
     it("should remove model from own storage remove method called", function () {
@@ -117,10 +117,10 @@ function (lecture, CollectionStorage) {
       storage.remove(aLecture);
 
       storage = new CollectionStorage("test-cs");
-      storage.restoreFromLocalStorage();
+      var ls = storage.restoreFromLocalStorage();
 
-      expect(storage.getStoredItems().length).toEqual(1);
-      expect(storage.getStoredItems()[0].title).toEqual(bLecture.get("title"));
+      expect(ls.length).toEqual(1);
+      expect(ls[0].title).toEqual(bLecture.get("title"));
     });
 
     it("should not break if localStorage is empty and restoreFromLocalStorage was called", function () {

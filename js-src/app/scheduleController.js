@@ -4,16 +4,29 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
 
     $display,
 
-    scheduleViews = {};
+    scheduleViews = {},
 
-    init = function ($aDisplay) {
+    storage,
+
+    init = function ($aDisplay, aStorage) {
       $display = $aDisplay;
+
+      storage = aStorage;
 
       lecturesByDay = new CollectionsGroup(schedule.Model, function (model) {
         return helpers.getDateStr(model.getDate());
       });
 
       addListeners();
+      loadFromStorage();
+    },
+
+    loadFromStorage = function () {
+      var stored = storage.restoreFromLocalStorage();
+      _.each(stored, function (item) {
+        var aLecture = new lecture.Model(item);
+        add(aLecture);
+      });
     },
 
     addListeners = function () {
@@ -58,10 +71,12 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
 
     add = function (aLecture) {
       lecturesByDay.add(aLecture);
+      storage.add(aLecture);
     },
 
     remove = function (aLecture) {
       lecturesByDay.remove(aLecture);
+      storage.remove(aLecture);
     };
 
   return {

@@ -41,9 +41,12 @@ define(["underscore", "backbone"], function (_, Backbone) {
 
   CollectionStorage.prototype.restoreFromLocalStorage = function () {
     var ls = localStorage.getItem(this.name);
+
     if (ls) {
-      this._storage = JSON.parse(ls);
+      return JSON.parse(ls);
     }
+
+    return [];
   };
 
   return CollectionStorage;
