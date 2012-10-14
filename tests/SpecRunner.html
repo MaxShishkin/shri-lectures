@@ -55,6 +55,8 @@
 </head>
 <body>
 
+  <!-- ####### Templates ####### -->
+  <!-- TODO: Move templates to separate files -->
   <script id="lecture-template" type="text/template">
     <div class="lecture-info-date">
       <span class="lecture-date">
@@ -73,17 +75,68 @@
       <span class="lecture-lecturer">
         <%= lecturer %>
       </span>
+      <a class="lecture-edit" href="#">
+        редактировать
+      </a>
     </div>
   </script>
 
   <script id="schedule-template" type="text/template">
     <div class="schedule-title">
       <span class="icon-bookmark"></span>
-      <%= title %>
+      <span class="schedule-title-text"><%= title %></span>
     </div>
     <div class="schedule-lectures">
-      <%= lectures %>
+
     </div>
   </script>
+
+  <!-- TODO: Use datetime input -->
+  <script id="lecture-template-edit" type="text/template">
+    <form>
+      <div class="control-group control-group-datetime">
+          <label class="control-label">Дата</label>
+          <div class="controls">
+            <input type="text" name="date" placeholder="дд.мм.гг" value="<%= date %>">
+          </div>
+          <label class="control-label">Время</label>
+          <div class="controls">
+            <input type="text" name="time" placeholder="чч:мм" value="<%= time %>">
+          </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Название</label>
+        <div class="controls">
+          <input class="input-xlarge" type="text" name="title" placeholder="Внеземной разум" value="<%= title %>">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Лектор</label>
+        <div class="controls">
+          <input class="input-xlarge" type="text" name="lecturer" placeholder="Василий Дудко" value="<%= lecturer %>">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Описание</label>
+        <div class="controls">
+          <textarea name="description"
+            placeholder="Одни ли мы во вселенной? Василий задавался этим вопросом с детства..."
+            rows="5"
+          ><%= description %></textarea>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn lecture-edit-save">Сохранить</button>
+          <button type="button" class="btn lecture-edit-cancel">Отмена</button>
+        </div>
+      </div>
+    </form>
+  </script>
+
 </body>
 </html>
