@@ -62,40 +62,17 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
       this.render(this.templateEdit);
     },
 
-    // TODO: Add live validation
-    // TODO: Move validateion to another module
     onEditSave: function (e) {
       e.preventDefault();
+      var form = this.proccessEditForm(this.$el);
 
-      var data = {},
-        date,
-        $datetimeGroup;
+      if (form.isValid) {
+        form.input.timestamp = form.processed.date.unix() * 1000;
 
-      this.$el.find("input").each(function (i, el) {
-        var $el = $(el);
+        delete form.input.date;
+        delete form.input.time;
 
-        data[$el.attr("name")] = $el.val();
-      });
-
-      data["description"] = this.$el.find("[name=description]").val();
-
-      date = helpers.parseDateStr(data.date + " " + data.time);
-
-      if (!date.isValid()) {
-        $datetimeGroup = this.$el.find(".control-group-datetime").addClass("error");
-        if (!$datetimeGroup.find(".help-inline").length) {
-          $("<span>", {
-            class: "help-inline",
-            text: "Дата введена неверно. Соблюдайте формат дд.мм.ггг для даты и формат чч:мм для времени."
-          }).appendTo($datetimeGroup);
-        }
-      }else {
-        data["timestamp"] = date.unix() * 1000;
-
-        delete data["date"];
-        delete data["time"];
-
-        this.model.set(data);
+        this.model.set(form.input);
 
         if (!this.model.hasChanged()) {
           this.render();
@@ -106,6 +83,38 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
     onEditCancel: function (e) {
       e.preventDefault();
       this.render();
+    },
+
+    // TODO: Add live validation
+    // TODO: Move validateion to another module ?
+    proccessEditForm: function ($frmContainer) {
+      var form = {
+        input: {},
+        processed: {},
+        isValid: true
+      },
+      $datetimeGroup;
+
+      $frmContainer.find("input").each(function (i, el) {
+        var $el = $(el);
+        form.input[$el.attr("name")] = $el.val();
+      });
+
+      form.input.description = $frmContainer.find("[name=description]").val();
+      form.processed.date = helpers.parseDateStr(form.input.date + " " + form.input.time);
+      form.isValid = form.processed.date.isValid();
+
+      if (!form.isValid) {
+        $datetimeGroup = $frmContainer.find(".control-group-datetime").addClass("error");
+        if (!$datetimeGroup.find(".help-inline").length) {
+          $("<span>", {
+            class: "help-inline",
+            text: "Дата введена неверно. Соблюдайте формат дд.мм.ггг для даты и формат чч:мм для времени."
+          }).appendTo($datetimeGroup);
+        }
+      }
+
+      return form;
     }
   });
 
