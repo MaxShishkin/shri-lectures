@@ -35,18 +35,27 @@ define(["underscore", "backbone"], function (_, Backbone) {
   };
 
   CollectionStorage.prototype.saveToLocalStorage = function () {
-    var json = JSON.stringify(this.getStoredItems());
-    localStorage.setItem(this.name, json);
+    localStorage.setItem(this.name, this.toJSON());
   };
 
   CollectionStorage.prototype.restoreFromLocalStorage = function () {
     var ls = localStorage.getItem(this.name);
 
-    if (ls) {
-      return JSON.parse(ls);
+    if (!ls) {
+      return [];
     }
 
-    return [];
+    try {
+      ls = JSON.parse(ls);
+    } catch (e) {
+      ls = [];
+    }
+
+    return ls;
+  };
+
+  CollectionStorage.prototype.toJSON = function () {
+    return JSON.stringify(this.getStoredItems());
   };
 
   return CollectionStorage;

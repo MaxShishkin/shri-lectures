@@ -4,8 +4,9 @@ define(["jquery", "underscore", "app/lecture"], function ($, _, lecture) {
 
   init = function (aScheduleController) {
     scheduleController = aScheduleController;
-    blankLecture = new lecture.Model
     initAddSection();
+    initExportSection();
+    initImportSection();
   },
 
   // TODO: Rewrite, it's awfull
@@ -49,6 +50,20 @@ define(["jquery", "underscore", "app/lecture"], function ($, _, lecture) {
     });
 
     $("#add").append($tpl);
+  },
+
+  initExportSection = function () {
+    $(".export-start").on("click", function (e) {
+      e.preventDefault();
+      $(".export-area").val(scheduleController.exportJSON());
+    });
+  };
+
+  initImportSection = function () {
+    $(".import-start").on("click", function (e) {
+      e.preventDefault();
+      scheduleController.importJSON($(".import-area").val());
+    });
   };
 
   return {

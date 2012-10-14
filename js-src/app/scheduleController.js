@@ -23,7 +23,11 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
 
     loadFromStorage = function () {
       var stored = storage.restoreFromLocalStorage();
-      _.each(stored, function (item) {
+      createModels(stored);
+    },
+
+    createModels = function (data) {
+      _.each(data, function (item) {
         var aLecture = new lecture.Model(item);
         add(aLecture);
       });
@@ -77,11 +81,36 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
     remove = function (aLecture) {
       lecturesByDay.remove(aLecture);
       storage.remove(aLecture);
+    },
+
+    exportJSON = function () {
+      return storage.toJSON();
+    },
+
+    importJSON = function (json) {
+      var parsed,
+        error = false;
+
+      try {
+        parsed = JSON.parse(json);
+      } catch (e) {
+        error = true;
+      }
+
+      if (!error) {
+        storage.clear();
+        $display.empty();
+        init($display, storage);
+        createModels(parsed);
+        window.location.hash = "#";
+      }
     };
 
   return {
     init: init,
     add: add,
-    remove: remove
+    remove: remove,
+    exportJSON: exportJSON,
+    importJSON: importJSON
   };
 });
