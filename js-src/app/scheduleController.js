@@ -102,6 +102,7 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
       if (!error) {
         storage.clear();
         $display.empty();
+        scheduleViews = {};
         init($display, storage);
         createModels(parsed);
         window.location.hash = "#";
