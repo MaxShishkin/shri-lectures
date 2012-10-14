@@ -10,6 +10,7 @@ define(["jquery", "underscore", "backbone", "app/lecture"], function ($, _, Back
 
     initialize: function (models, title) {
       this.title = title;
+      this.on("change:timestamp", this.sort, this);
     }
   });
 
@@ -25,6 +26,7 @@ define(["jquery", "underscore", "backbone", "app/lecture"], function ($, _, Back
 
     initialize: function () {
       this.collection.on("add", this.render, this);
+      this.collection.on("reset", this.render, this);
       this.collection.on("remove", this.onModelRemoved, this);
 
       this.render();
@@ -37,15 +39,36 @@ define(["jquery", "underscore", "backbone", "app/lecture"], function ($, _, Back
 
     template: _.template($("#schedule-template").html()),
 
+    softRender: false,
+
+    // TODO: Rewrite in more sensible way
     render: function () {
       var aLectureView,
-      $container;
+        $container;
 
-      this.$el.html(this.template({
-        title: this.collection.title
-      }));
+      // Fully re-render template only if told so,
+      // otherwise use existing objects.
+      // Needed for maintaining existing events on objects.
+      if (!this.softRender) {
+        this.$el.html(this.template({
+          title: this.collection.title
+        }));
 
-      $container = this.$el.find(".schedule-lectures");
+        $container = this.$el.find(".schedule-lectures");
+
+        this.softRender = true;
+      } else {
+        $container = this.$el.find(".schedule-lectures");
+
+        if (!$container.length) {
+          $container = $("<div>", {
+            class: ".schedule-lectures"
+          });
+        }
+
+        $title = this.$el.find(".schedule-title-text");
+        $title.text(this.collection.title);
+      }
 
       _.each(this.collection.models, function (aLecture) {
         aLectureView = this.views[aLecture.cid];

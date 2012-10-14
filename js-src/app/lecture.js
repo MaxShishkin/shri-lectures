@@ -45,6 +45,14 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
       this.$el.html(
         this.template(json)
       );
+    },
+
+    events: {
+      "click .lecture-edit" : "onEdit"
+    },
+
+    onEdit: function (e) {
+      e.preventDefault();
     }
   });
 
