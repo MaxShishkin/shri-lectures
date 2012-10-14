@@ -53,13 +53,19 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
 
     events: {
       "click .lecture-edit": "onEdit",
+      "click .lecture-delete": "onDelete",
       "click .lecture-edit-cancel": "onEditCancel",
-      "click .lecture-edit-save": "onEditSave",
+      "click .lecture-edit-save": "onEditSave"
     },
 
     onEdit: function (e) {
       e.preventDefault();
       this.render(this.templateEdit);
+    },
+
+    onDelete: function (e) {
+      e.preventDefault();
+      this.model.destroy()
     },
 
     onEditSave: function (e) {

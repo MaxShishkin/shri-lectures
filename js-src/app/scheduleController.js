@@ -42,6 +42,8 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
       var aScheduleView,
         closestView = {weight: 0};
 
+      aSchedule.on("destroy", remove);
+
       aSchedule.title = helpers.getDateStr(aSchedule.at(0).getDate());
 
       aScheduleView = new schedule.View({
