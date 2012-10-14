@@ -15,16 +15,26 @@ require(["jquery", "app/navigation", "app/lecture", "app/schedule"], function ($
     description: "A lecture on being an awesome dude continues!"
   });
 
+  cLecture = new lecture.Model({
+    timestamp: 7867687,
+    title: "Some old lection",
+    lecturer: "Old man",
+    description: "How to survive for years."
+  });
+
   var aSchedule = new schedule.Model([aLecture, bLecture], "Awesome lectures series");
-  var bSchedule = new schedule.Model([aLecture, bLecture], "Awesome lectures series");
+  var bSchedule = new schedule.Model([cLecture], "Awesome lectures series");
 
   var aScheduleView = new schedule.View({
     collection: aSchedule
   });
   var bScheduleView = new schedule.View({
-    collection: aSchedule
+    collection: bSchedule
   });
 
   $("#view").append(aScheduleView.$el);
   $("#view").append(bScheduleView.$el);
+
+  aSchedule.remove(aLecture);
+  bSchedule.add(aLecture);
 });

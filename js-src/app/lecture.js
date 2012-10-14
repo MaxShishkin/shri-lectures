@@ -31,6 +31,7 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
     },
 
     initialize: function () {
+      this.model.on("change", this.render, this);
       this.render();
     },
 
@@ -41,7 +42,7 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
       json.date = helpers.getDateStr(this.model.getDate());
       json.time = helpers.getTimeStr(this.model.getDate());
 
-      this.$el.append(
+      this.$el.html(
         this.template(json)
       );
     }
