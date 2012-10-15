@@ -1,4 +1,4 @@
-require(["jquery", "app/navigation/sectionNavigation", "app/scheduleController", "app/pages", "app/storage/modelStorage", "app/models/lecture"],
+require(["jquery", "app/navigation/sectionNavigation", "app/scheduleController", "app/misc/pages", "app/storage/modelStorage", "app/models/lecture"],
 function ($, sectionNavigation, controller, pages, ModelStorage, Lecture) {
   sectionNavigation.init("#view", $(".nav"));
 
