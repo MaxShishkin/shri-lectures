@@ -1,8 +1,10 @@
-require(["jquery", "app/navigation/sectionNavigation", "app/scheduleController", "app/pages", "app/collectionStorage"],
-function ($, sectionNavigation, controller, pages, CollectionStorage) {
+require(["jquery", "app/navigation/sectionNavigation", "app/scheduleController", "app/pages", "app/storage/modelStorage", "app/models/lecture"],
+function ($, sectionNavigation, controller, pages, ModelStorage, Lecture) {
   sectionNavigation.init("#view", $(".nav"));
 
-  storage = new CollectionStorage("shri_lectures");
+  storage = new ModelStorage("shri_lectures", Lecture.Model);
+  storage.restore();
+
   controller.init($("#view"), storage);
 
   pages.init(controller);

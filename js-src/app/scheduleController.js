@@ -22,8 +22,9 @@ function ($, _, dateUtil, Lecture, Schedule, MetaCollection) {
     },
 
     loadFromStorage = function () {
-      var stored = storage.restoreFromLocalStorage();
-      createModels(stored);
+      _.each(storage.getModels(), function (model) {
+        add(model);
+      });
     },
 
     createModels = function (data) {
@@ -78,7 +79,11 @@ function ($, _, dateUtil, Lecture, Schedule, MetaCollection) {
     add = function (aLecture) {
       if (!(aLecture instanceof Lecture.Model)) {
         aLecture = new Lecture.Model(aLecture);
+        console.log("not inst");
       }
+
+      console.log("adding");
+      console.log(aLecture);
 
       lecturesByDay.add(aLecture);
       storage.add(aLecture);
