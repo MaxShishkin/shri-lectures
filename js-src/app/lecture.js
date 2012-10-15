@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Backbone, helpers) {
+define(["jquery", "underscore", "backbone", "app/utils/dateUtil"], function ($, _, Backbone, dateUtil) {
 
   var Model = Backbone.Model.extend({
     initialize: function () {
@@ -41,8 +41,8 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
 
     render: function (template) {
       var json = this.model.toJSON();
-      json.date = helpers.getDateStr(this.model.getDate());
-      json.time = helpers.getTimeStr(this.model.getDate());
+      json.date = dateUtil.getDateStr(this.model.getDate());
+      json.time = dateUtil.getTimeStr(this.model.getDate());
 
       template = _.isFunction(template) ? template : this.template;
 
@@ -106,7 +106,7 @@ define(["jquery", "underscore", "backbone", "app/helpers"], function ($, _, Back
         form.input[$el.attr("name")] = $el.val();
       });
 
-      form.processed.date = helpers.parseDateStr(form.input.date + " " + form.input.time);
+      form.processed.date = dateUtil.parseDateTimeStr(form.input.date + " " + form.input.time);
       form.isValid = form.processed.date.isValid();
 
       if (!form.isValid) {

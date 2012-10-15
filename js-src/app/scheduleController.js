@@ -1,5 +1,5 @@
-define(["jquery", "underscore", "app/helpers", "app/lecture", "app/schedule", "app/collectionsGroup"],
-function ($, _, helpers, lecture, schedule, CollectionsGroup) {
+define(["jquery", "underscore", "app/utils/dateUtil", "app/lecture", "app/schedule", "app/collectionsGroup"],
+function ($, _, dateUtil, lecture, schedule, CollectionsGroup) {
   var lecturesByDay,
 
     $display,
@@ -14,7 +14,7 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
       storage = aStorage;
 
       lecturesByDay = new CollectionsGroup(schedule.Model, function (model) {
-        return helpers.getDateStr(model.getDate());
+        return dateUtil.getDateStr(model.getDate());
       });
 
       addListeners();
@@ -44,7 +44,7 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
 
       aSchedule.on("destroy", remove);
 
-      aSchedule.title = helpers.getDateStr(aSchedule.at(0).getDate());
+      aSchedule.title = dateUtil.getDateStr(aSchedule.at(0).getDate());
 
       aScheduleView = new schedule.View({
         collection: aSchedule
