@@ -76,6 +76,10 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
     },
 
     add = function (aLecture) {
+      if (!(aLecture instanceof lecture.Model)) {
+        aLecture = new lecture.Model(aLecture);
+      }
+
       lecturesByDay.add(aLecture);
       storage.add(aLecture);
     },
@@ -90,7 +94,7 @@ function ($, _, helpers, lecture, schedule, CollectionsGroup) {
     },
 
     importJSON = function (json) {
-      var parsed,
+      var parsed,ject
         error = false;
 
       try {

@@ -31,9 +31,7 @@ define(["jquery", "underscore", "app/lecture"], function ($, _, lecture) {
           delete form.input.date;
           delete form.input.time;
 
-          var aLecture = new lecture.Model(form.input);
-
-          scheduleController.add(aLecture);
+          scheduleController.add(form.input);
 
           $tpl.find("input, textarea").each(function (i, el) {
             var $el = $(el);
