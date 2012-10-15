@@ -1,6 +1,6 @@
-define(["jquery", "underscore", "backbone", "app/lecture"], function ($, _, Backbone, lecture) {
+define(["jquery", "underscore", "backbone", "app/models/lecture"], function ($, _, Backbone, Lecture) {
   var Model = Backbone.Collection.extend({
-    model: lecture.Model,
+    model: Lecture.Model,
 
     title: "",
 
@@ -74,7 +74,7 @@ define(["jquery", "underscore", "backbone", "app/lecture"], function ($, _, Back
         aLectureView = this.views[aLecture.cid];
 
         if (!aLectureView) {
-          aLectureView = new lecture.View({model: aLecture});
+          aLectureView = new Lecture.View({model: aLecture});
           this.views[aLecture.cid] = aLectureView;
         }
 

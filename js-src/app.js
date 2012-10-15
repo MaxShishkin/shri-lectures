@@ -1,5 +1,5 @@
-require(["jquery", "app/navigation/sectionNavigation", "app/scheduleController", "app/pages", "app/collectionStorage", "app/lecture"],
-function ($, sectionNavigation, controller, pages, CollectionStorage, lecture) {
+require(["jquery", "app/navigation/sectionNavigation", "app/scheduleController", "app/pages", "app/collectionStorage"],
+function ($, sectionNavigation, controller, pages, CollectionStorage) {
   sectionNavigation.init("#view", $(".nav"));
 
   storage = new CollectionStorage("shri_lectures");

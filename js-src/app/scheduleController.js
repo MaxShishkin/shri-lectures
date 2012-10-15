@@ -1,5 +1,5 @@
-define(["jquery", "underscore", "app/utils/dateUtil", "app/lecture", "app/schedule", "app/collectionsGroup"],
-function ($, _, dateUtil, lecture, schedule, CollectionsGroup) {
+define(["jquery", "underscore", "app/utils/dateUtil", "app/models/lecture", "app/collections/schedule", "app/collectionsGroup"],
+function ($, _, dateUtil, Lecture, Schedule, CollectionsGroup) {
   var lecturesByDay,
 
     $display,
@@ -13,7 +13,7 @@ function ($, _, dateUtil, lecture, schedule, CollectionsGroup) {
 
       storage = aStorage;
 
-      lecturesByDay = new CollectionsGroup(schedule.Model, function (model) {
+      lecturesByDay = new CollectionsGroup(Schedule.Model, function (model) {
         return dateUtil.getDateStr(model.getDate());
       });
 
@@ -28,7 +28,7 @@ function ($, _, dateUtil, lecture, schedule, CollectionsGroup) {
 
     createModels = function (data) {
       _.each(data, function (item) {
-        var aLecture = new lecture.Model(item);
+        var aLecture = new Lecture.Model(item);
         add(aLecture);
       });
     },
@@ -46,7 +46,7 @@ function ($, _, dateUtil, lecture, schedule, CollectionsGroup) {
 
       aSchedule.title = dateUtil.getDateStr(aSchedule.at(0).getDate());
 
-      aScheduleView = new schedule.View({
+      aScheduleView = new Schedule.View({
         collection: aSchedule
       });
 
@@ -76,8 +76,8 @@ function ($, _, dateUtil, lecture, schedule, CollectionsGroup) {
     },
 
     add = function (aLecture) {
-      if (!(aLecture instanceof lecture.Model)) {
-        aLecture = new lecture.Model(aLecture);
+      if (!(aLecture instanceof Lecture.Model)) {
+        aLecture = new Lecture.Model(aLecture);
       }
 
       lecturesByDay.add(aLecture);

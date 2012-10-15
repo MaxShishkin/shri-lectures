@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "app/lecture"], function ($, _, lecture) {
+define(["jquery", "underscore", "app/models/lecture"], function ($, _, Lecture) {
 
   var scheduleController,
 
@@ -23,7 +23,7 @@ define(["jquery", "underscore", "app/lecture"], function ($, _, lecture) {
     $tpl.find(".lecture-edit-save").on("click", function (e) {
       event.preventDefault();
 
-      var form = lecture.View.prototype.proccessEditForm($tpl);
+      var form = Lecture.View.prototype.proccessEditForm($tpl);
 
       if (form.isValid) {
           form.input.timestamp = form.processed.date.unix() * 1000;
