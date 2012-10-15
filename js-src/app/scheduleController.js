@@ -82,9 +82,6 @@ function ($, _, dateUtil, Lecture, Schedule, MetaCollection) {
         console.log("not inst");
       }
 
-      console.log("adding");
-      console.log(aLecture);
-
       lecturesByDay.add(aLecture);
       storage.add(aLecture);
     },
