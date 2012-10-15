@@ -1,5 +1,5 @@
-define(["jquery", "underscore", "app/utils/dateUtil", "app/models/lecture", "app/collections/schedule", "app/collectionsGroup"],
-function ($, _, dateUtil, Lecture, Schedule, CollectionsGroup) {
+define(["jquery", "underscore", "app/utils/dateUtil", "app/models/lecture", "app/collections/schedule", "app/collections/metaCollection"],
+function ($, _, dateUtil, Lecture, Schedule, MetaCollection) {
   var lecturesByDay,
 
     $display,
@@ -13,7 +13,7 @@ function ($, _, dateUtil, Lecture, Schedule, CollectionsGroup) {
 
       storage = aStorage;
 
-      lecturesByDay = new CollectionsGroup(Schedule.Model, function (model) {
+      lecturesByDay = new MetaCollection(Schedule.Model, function (model) {
         return dateUtil.getDateStr(model.getDate());
       });
 
