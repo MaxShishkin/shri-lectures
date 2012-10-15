@@ -1,6 +1,6 @@
-define(["app/helpers", "app/lecture", "app/schedule", "app/collectionsGroup", "jasmine/jasmine-html"],
-function (helpers, lecture, schedule, CollectionsGroup) {
-  describe("CollectionsGroup", function () {
+define(["app/utils/dateUtil", "app/models/lecture", "app/collections/schedule", "app/collections/metaCollection", "jasmine/jasmine-html"],
+function (dateUtil, Lecture, Schedule, MetaCollection) {
+  describe("MetaCollection", function () {
 
     var aLecture,
       bLecture,
@@ -9,29 +9,29 @@ function (helpers, lecture, schedule, CollectionsGroup) {
 
     beforeEach(function () {
 
-      aLecture = new lecture.Model({
+      aLecture = new Lecture.Model({
         timestamp: new Date().getTime(),
         title: "New awesome lecture",
         lecturer: "Some Dude",
         description: "A lecture on being an awesome dude! Be shure to come!"
       });
 
-      bLecture = new lecture.Model({
+      bLecture = new Lecture.Model({
         timestamp: new Date().getTime(),
         title: "New awesome lecture vol. 2",
         lecturer: "Some Dude",
         description: "A lecture on being an awesome dude continues!"
       });
 
-      cLecture = new lecture.Model({
+      cLecture = new Lecture.Model({
         timestamp: 7867687,
         title: "Some old lection",
         lecturer: "Old man",
         description: "How to survive for years."
       });
 
-      schedulesByDay = new CollectionsGroup(schedule.Model, function (model) {
-        return helpers.getDateStr(model.getDate());
+      schedulesByDay = new MetaCollection(Schedule.Model, function (model) {
+        return dateUtil.getDateStr(model.getDate());
       });
     });
 
@@ -60,8 +60,8 @@ function (helpers, lecture, schedule, CollectionsGroup) {
     });
 
     it("should be able to return collections by hash", function () {
-      var hashOne = helpers.getDateStr(aLecture.getDate());
-      var hashTwo = helpers.getDateStr(cLecture.getDate());
+      var hashOne = dateUtil.getDateStr(aLecture.getDate());
+      var hashTwo = dateUtil.getDateStr(cLecture.getDate());
 
       schedulesByDay.add(aLecture);
       schedulesByDay.add(bLecture);
@@ -96,7 +96,7 @@ function (helpers, lecture, schedule, CollectionsGroup) {
       schedulesByDay.add(bLecture);
       schedulesByDay.add(cLecture);
 
-      var hashOne = helpers.getDateStr(aLecture.getDate());
+      var hashOne = dateUtil.getDateStr(aLecture.getDate());
       var groupOne = schedulesByDay.getGroupByHash(hashOne);
 
       expect(groupOne.length).toEqual(2);

@@ -1,6 +1,6 @@
-define(["app/lecture", "app/collectionStorage", "jasmine/jasmine-html"],
-function (lecture, CollectionStorage) {
-  describe("CollectionStorage", function () {
+define(["app/models/lecture", "app/storage/modelStorage", "jasmine/jasmine-html"],
+function (Lecture, ModelStorage) {
+  describe("ModelStorage", function () {
 
     var storage,
       aLecture,
@@ -9,28 +9,28 @@ function (lecture, CollectionStorage) {
 
     beforeEach(function () {
 
-      aLecture = new lecture.Model({
+      aLecture = new Lecture.Model({
         timestamp: new Date().getTime(),
         title: "New awesome lecture",
         lecturer: "Some Dude",
         description: "A lecture on being an awesome dude! Be shure to come!"
       });
 
-      bLecture = new lecture.Model({
+      bLecture = new Lecture.Model({
         timestamp: new Date().getTime(),
         title: "New awesome lecture vol. 2",
         lecturer: "Some Dude",
         description: "A lecture on being an awesome dude continues!"
       });
 
-      cLecture = new lecture.Model({
+      cLecture = new Lecture.Model({
         timestamp: 7867687,
         title: "Some old lection",
         lecturer: "Old man",
         description: "How to survive for years."
       });
 
-      storage = new CollectionStorage("test-cs")
+      storage = new ModelStorage("test-cs", Lecture.Model)
       localStorage.removeItem("test-cs");
     });
 
@@ -87,14 +87,14 @@ function (lecture, CollectionStorage) {
       storage.add(aLecture);
       storage.add(bLecture);
 
-      storage = new CollectionStorage("test-cs");
-      var ls = storage.restoreFromLocalStorage();
+      storage = new ModelStorage("test-cs", Lecture.Model);
+      storage.restore();
 
-      expect(ls.length).toEqual(2);
+      expect(storage.getStoredItems().length).toEqual(2);
 
-      expect(ls[0].title).toEqual(aLecture.get("title"));
-      expect(ls[0].timestamp).toEqual(aLecture.get("timestamp"));
-      expect(ls[1].description).toEqual(bLecture.get("description"));
+      expect(storage.getStoredItems()[0].title).toEqual(aLecture.get("title"));
+      expect(storage.getStoredItems()[0].timestamp).toEqual(aLecture.get("timestamp"));
+      expect(storage.getStoredItems()[1].description).toEqual(bLecture.get("description"));
     });
 
     it("should remove model from own storage remove method called", function () {
@@ -116,15 +116,15 @@ function (lecture, CollectionStorage) {
 
       storage.remove(aLecture);
 
-      storage = new CollectionStorage("test-cs");
-      var ls = storage.restoreFromLocalStorage();
+      storage = new ModelStorage("test-cs", Lecture.Model);
+      storage.restore();
 
-      expect(ls.length).toEqual(1);
-      expect(ls[0].title).toEqual(bLecture.get("title"));
+      expect(storage.getStoredItems().length).toEqual(1);
+      expect(storage.getStoredItems()[0].title).toEqual(bLecture.get("title"));
     });
 
     it("should not break if localStorage is empty and restoreFromLocalStorage was called", function () {
-      storage.restoreFromLocalStorage();
+      storage.restore();
 
       expect(storage.getStoredItems().length).toEqual(0);
     });
