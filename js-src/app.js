@@ -2,7 +2,7 @@ require(["jquery", "app/navigation/sectionNavigation", "app/scheduleController",
 function ($, sectionNavigation, controller, pages, ModelStorage, Lecture) {
   sectionNavigation.init("#view", $(".nav"));
 
-  storage = new ModelStorage("shri_lectures", Lecture.Model);
+  var storage = new ModelStorage("shri_lectures", Lecture.Model);
   storage.restore();
 
   controller.init($("#view"), storage);

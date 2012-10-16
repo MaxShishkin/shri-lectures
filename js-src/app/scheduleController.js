@@ -79,7 +79,6 @@ function ($, _, dateUtil, Lecture, Schedule, MetaCollection) {
     add = function (aLecture) {
       if (!(aLecture instanceof Lecture.Model)) {
         aLecture = new Lecture.Model(aLecture);
-        console.log("not inst");
       }
 
       lecturesByDay.add(aLecture);
