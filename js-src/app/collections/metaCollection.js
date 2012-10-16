@@ -1,7 +1,7 @@
 define(["underscore"], function (_) {
 
   var MetaCollection = function (Collection, groupBy) {
-    this._Collection = Collection;
+    this.Collection = Collection;
     this._groupBy = groupBy;
     this._models = {};
     this._collections = {};
@@ -15,7 +15,7 @@ define(["underscore"], function (_) {
       collection = this._collections[hash];
 
     if (!collection) {
-      collection = new this._Collection();
+      collection = new this.Collection();
     }
 
     this._models[model.cid] = model;
@@ -30,6 +30,7 @@ define(["underscore"], function (_) {
     }
 
     model.on("change", this._onModelChange, this);
+    model.on("destroy", this.remove, this);
 
     return collection;
   }
@@ -46,7 +47,8 @@ define(["underscore"], function (_) {
       delete this._modelsCollections[model.cid];
 
       collection.remove(model);
-      model.off("change", this._onModelChange)
+      model.off("change", this._onModelChange);
+      model.off("destroy", this._onModelChange);
 
       if (!collection.length) {
         delete this._collections[hash];
@@ -71,12 +73,14 @@ define(["underscore"], function (_) {
     return this._collections[hash];
   }
 
-  MetaCollection.prototype.on = function (evt, fn) {
+  MetaCollection.prototype.on = function (evt, fn, context) {
     if (!this._pubsub[evt]) {
       this._pubsub[evt] = [];
     }
 
-    this._pubsub[evt].push(fn);
+    this._pubsub[evt].push(function () {
+      fn.apply(context, arguments);
+    });
   }
 
   // TODO: Implement
